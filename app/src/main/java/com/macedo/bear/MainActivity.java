@@ -60,4 +60,38 @@ public class MainActivity extends AppCompatActivity {
         else
             onActivityResult(VPN_REQUEST_CODE, RESULT_OK, null);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VPN_REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            waitingForVPNStart = true;
+            startService(new Intent(this, LocalVPNService.class));
+            enableButton(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        enableButton(!waitingForVPNStart && !LocalVPNService.isRunning());
+    }
+
+    private void enableButton(boolean enable)
+    {
+        final Button vpnButton = findViewById(R.id.mainActivity_startMonitoring);
+        if (enable)
+        {
+            vpnButton.setEnabled(true);
+            vpnButton.setText(R.string.start_vpn);
+        }
+        else
+        {
+            vpnButton.setEnabled(false);
+            vpnButton.setText(R.string.stop_vpn);
+        }
+    }
 }

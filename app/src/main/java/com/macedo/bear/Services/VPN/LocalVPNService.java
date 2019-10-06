@@ -170,7 +170,6 @@ public class LocalVPNService extends VpnService
             this.deviceToNetworkTCPQueue = deviceToNetworkTCPQueue;
             this.networkToDeviceQueue = networkToDeviceQueue;
 
-            Log.w("teste123", networkToDeviceQueue.toString());
         }
 
         @Override
@@ -183,6 +182,7 @@ public class LocalVPNService extends VpnService
 
             try
             {
+
                 ByteBuffer bufferToNetwork = null;
                 boolean dataSent = true;
                 boolean dataReceived;
@@ -200,6 +200,7 @@ public class LocalVPNService extends VpnService
                         dataSent = true;
                         bufferToNetwork.flip();
                         Packet packet = new Packet(bufferToNetwork);
+
                         if (packet.isUDP())
                         {
                             deviceToNetworkUDPQueue.offer(packet);
@@ -238,7 +239,7 @@ public class LocalVPNService extends VpnService
                     // TODO: Sleep-looping is not very battery-friendly, consider blocking instead
                     // Confirm if throughput with ConcurrentQueue is really higher compared to BlockingQueue
                     if (!dataSent && !dataReceived)
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                 }
             }
             catch (InterruptedException e)

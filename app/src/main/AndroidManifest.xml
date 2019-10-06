@@ -21,6 +21,17 @@
             android:name=".Services.SyncService"
             android:enabled="true"
             android:exported="true"></service>
-    </application>
 
+        <service
+            android:name=".Services.VPN.LocalVPNService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+
+            <intent-filter>
+                <action android:name="android.net.VpnService"/>
+            </intent-filter>
+        </service>
+    </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -316,6 +316,7 @@ public class Packet
             sb.append(", headerChecksum=").append(headerChecksum);
             sb.append(", sourceAddress=").append(sourceAddress.getHostAddress());
             sb.append(", destinationAddress=").append(destinationAddress.getHostAddress());
+            sb.append(", destinationName=").append(destinationAddress.getHostName());
             sb.append('}');
             return sb.toString();
         }
